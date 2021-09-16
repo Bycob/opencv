@@ -531,7 +531,7 @@ macro(cuda_unset_include_and_libraries)
   unset(CUDA_nppi_LIBRARY CACHE)
   unset(CUDA_npps_LIBRARY CACHE)
   unset(CUDA_nvencodeapi_LIBRARY CACHE)
-  unset(CUDA_nvcuvid_LIBRARY CACHE)
+  # unset(CUDA_nvcuvid_LIBRARY CACHE)
 endmacro()
 
 # Check to see if the CUDA_TOOLKIT_ROOT_DIR and CUDA_SDK_ROOT_DIR have changed,

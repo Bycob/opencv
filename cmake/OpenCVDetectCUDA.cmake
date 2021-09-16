@@ -59,11 +59,12 @@ if(CUDA_FOUND)
   endif()
 
   if(WITH_NVCUVID OR WITH_NVCUVENC)
+    set(CUSTOM_NVCUVID_INCLUDE_DIR "/usr/local/cuda/include/" CACHE STRING "Specify custom location for nvcuvid includes")
     macro(ocv_cuda_SEARCH_NVCUVID_HEADER _filename _result)
       # place header file under CUDA_TOOLKIT_TARGET_DIR or CUDA_TOOLKIT_ROOT_DIR
       find_path(_header_result
         ${_filename}
-        PATHS "${CUDA_TOOLKIT_TARGET_DIR}" "${CUDA_TOOLKIT_ROOT_DIR}"
+        PATHS "${CUDA_TOOLKIT_TARGET_DIR}" "${CUDA_TOOLKIT_ROOT_DIR}" "${CUSTOM_NVCUVID_INCLUDE_DIR}"
         ENV CUDA_PATH
         ENV CUDA_INC_PATH
         PATH_SUFFIXES include
@@ -95,6 +96,12 @@ if(CUDA_FOUND)
       if((CUDA_nvencodeapi_LIBRARY OR CUDA_nvidia-encode_LIBRARY) AND ${HAVE_NVCUVENC_HEADER})
         set(HAVE_NVCUVENC 1)
       endif()
+    endif()
+    # XXX(louis)
+    if(CUSTOM_NVCUVID_INCLUDE_DIR)
+      message(STATUS "CUSTOM_NVCUVID_INCLUDE_DIR=${CUSTOM_NVCUVID_INCLUDE_DIR}")
+      message(STATUS "CUDA_nvcuvid_LIBRARY=${CUDA_nvcuvid_LIBRARY}")
+      include_directories("${CUSTOM_NVCUVID_INCLUDE_DIR}")
     endif()
   endif()
 
